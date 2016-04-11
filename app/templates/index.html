@@ -1,6 +1,26 @@
-Hello,
-{% if current_user.is_authenticated() %}
-	{{ current_user.username }}
-{% else %}
-	Stranger
-{% endif %}!
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    
+    <p>
+    {% for message in get_flashed_messages() %}
+    	<div class="alert alert-danger">
+        {% if dismissable %}
+         	<button type="button" class="close" data-dismiss="alert">&times;</button>
+        {% endif %}
+         	{{ message }}
+        </div>
+    {% endfor %}
+   
+    <div class="center jumbotron"> 	
+    {% if current_user.is_authenticated %}
+        <!-- {% include 'auth/values.html' %} -->
+        {{ current_user.username }}
+	{% else %}
+	    <h2> Document Management App</h2><br>
+        <p>This is an application that helps manage your documents</p>
+    	<p><a class="btn btn-primary btn-lg login-btn" href="/auth/login" role="button">Login to Continue!</a></p>
+	{% endif %}
+</div>
+{% endblock %}

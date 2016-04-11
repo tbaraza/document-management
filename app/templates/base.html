@@ -1,28 +1,73 @@
-{% extends "bootstrap/base.html" %}
-{% block title %}Document Management{% endblock %}
+{% extends "bootstrap/base.html" %} 
+{% block title %}Document Management{% endblock %} 
+{% block head %} {{ super() }}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon"> 
+{% endblock %}
+{% block body %}
+{% if not current_user.is_authenticated %}
+    <div class="bg">
+    <div>
+    <!-- <img src="{{ url_for('static',filename='images/biz.jpg') }}" id="bg" alt=""> -->
+    </div>
+    <div>
+        
+    
+ {% endif %}
 {% block navbar %}
-	<div class="navbar navbar-inverse" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle"
-				data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/">Document Management</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="/">Home</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-{% endblock %}
-{% block content %}
-	<div class="container">
-		{% block page_content %}{% endblock %}
-	</div>
-{% endblock %}
+    <header>
+    <div class="nav">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+              <strong>D</strong>ocument
+                <strong>M</strong>anagement
+            </a>
+        </div>
+        <div class="container">
+            <a href="{{ url_for('main.index') }}">
+
+                    <span class="glyphicon glyphicon-home" aria-hidden="true" style="margin-top: 16px;"></span>
+                    Home
+            </a>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+
+               <li> <a href="#">Hello {{ current_user.username }} </a></li>
+
+                    <li><a href="{{ url_for('main.history', username=current_user.username) }}"><span
+                            class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;History</a></li>
+                    <li><a href="{{ url_for('auth.logout') }}"><span
+                            class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Log Out</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}"><span
+                            class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Log In</a></li>
+                {% endif %}
+               {# <li><a href="{{ url_for('auth.signup') }}"><span
+                        class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Sign up</a></li>#}
+            </ul>
+
+
+        </div>
+    </header>
+{% endblock navbar %}
+
+ {% block content %}
+
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %} {% block page_content %}{% endblock %}
+    </div>
+{% endblock content %}
+
+{% block scripts %} 
+{{ super() }} {{ moment.include_moment() }} 
+{% endblock scripts %}
+</div>
+   </div>  
+{% endblock body %}

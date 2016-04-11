@@ -1,0 +1,5 @@
+{% block page_content %}
+<h1> You have not confirmed your account yet</h1>
+<h3>Need another confirmation email</h3>
+<a href="{{ url_for('auth.resend_confirmation', username=current_user.username) }}">click here
+{% endblock %}
