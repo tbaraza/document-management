@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-{% block content %}
+
+{% block page_content %}
 <div class="container">
     
     <p>
@@ -15,8 +17,7 @@
    
     <div class="center jumbotron"> 	
     {% if current_user.is_authenticated %}
-        <!-- {% include 'auth/values.html' %} -->
-        {{ current_user.username }}
+         {% include 'docs.html' %}
 	{% else %}
 	    <h2> Document Management App</h2><br>
         <p>This is an application that helps manage your documents</p>

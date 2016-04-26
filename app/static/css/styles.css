@@ -1,0 +1,18 @@
+.navbar-header{
+	float: left;
+    position: relative;
+    display: inline;
+}
+
+.nav navbar-nav navbar-right{
+	float: left;
+    position: relative;
+    display: inline;
+}
+
+#page-wrap{
+    background-image: url('../images/tabs.png');
+    background-position: center center;
+    color: #44403b;
+    font-weight: bold;
+}

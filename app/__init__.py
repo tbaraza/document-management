@@ -9,7 +9,7 @@ from flask_oauthlib.client import OAuth
 
 app = Flask(__name__)
 app.config.from_object('config')
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 bootstrap = Bootstrap()
 moment = Moment()
 mail = Mail()
@@ -23,7 +23,6 @@ login_manager.login_view = 'auth.login'
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
-
     config[config_name].init_app(app)
 
     bootstrap.init_app(app)

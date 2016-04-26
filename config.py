@@ -5,13 +5,15 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = 'something good'
+    CSRF_ENABLED = True
+    # SSL_DISABLE = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-    MAIL_SERVER = 'smtp.googlemail.com'
+    MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    DOCUMENT_MANAGEMENT_MAIL_SUBJECT_PREFIX = ['document_management']
+    DOCUMENT_MANAGEMENT_MAIL_SUBJECT_PREFIX = '[document_management]'
     DOCUMENT_MANAGEMENT_MAIL_SENDER = 'document_management Admin <tonidahnjeli@gmail.com>'
 
     SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')

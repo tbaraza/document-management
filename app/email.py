@@ -1,12 +1,20 @@
-from app import mail
+from threading import Thread
+from flask import current_app, render_template
 from flask.ext.mail import Message
-from config import Config
-from flask import render_template
+from . import mail
+
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
 
 
 def send_email(to, subject, template, **kwargs):
-    msg = Message(Config['DOCUMENT_MANAGEMENT_MAIL_SUBJECT_PREFIX'] + subject,
-                  sender=Config['DOCUMENT_MANAGEMENT_MAIL_SENDER'], recipients=[to])
+    app = current_app._get_current_object()
+    msg = Message(app.config['DOCUMENT_MANAGEMENT_MAIL_SUBJECT_PREFIX'] + ' ' + subject,
+                  sender=app.config['DOCUMENT_MANAGEMENT_MAIL_SENDER'], recipients=[to])
     msg.body = render_template(template + '.txt', **kwargs)
     msg.html = render_template(template + '.html', **kwargs)
-    mail.send(msg)
+    thr = Thread(target=send_async_email, args=[app, msg])
+    thr.start()
+    return thr
